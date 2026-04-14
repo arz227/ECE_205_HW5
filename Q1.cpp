@@ -1,11 +1,11 @@
-0
 #include <iostream>
 using namespace std;
 
+// Class to store bicycle trip information
 class BicycleSpeedometer
 {
 public:
-    // Default constructor initializes all values to 0
+    // Default constructor sets all values to 0
     BicycleSpeedometer()
     {
         distance = 0;
@@ -13,48 +13,38 @@ public:
         avg_speed = 0;
     }
 
-    // Set the distance in miles
+    // Set distance in miles
     void set_distance(double distance1)
     {
         distance = distance1;
     }
 
-    // Set the time in minutes
+    // Set time in minutes
     void set_time(double time1)
     {
         time = time1;
     }
 
-    // Return distance value
+    // Return distance
     double get_distance()
     {
         return distance;
     }
 
-    // Return time value
+    // Return time
     double get_time()
     {
         return time;
     }
 
-    // Calculate average speed (miles per hour)
+    // Compute average speed in miles per hour
     double average_speed()
     {
-        // Check to avoid division by zero
-        if (time != 0)
-        {
-            // Convert minutes to hours before dividing
-            avg_speed = distance / (time / 60.0);
-        }
-        else
-        {
-            avg_speed = 0;
-        }
-
+        avg_speed = distance / (time / 60.0);
         return avg_speed;
     }
 
-    // Display all results neatly
+    // Display trip details
     void display()
     {
         cout << "Distance traveled = " << distance << " miles" << endl;
@@ -63,40 +53,55 @@ public:
     }
 
 private:
-    double distance;   // stores distance
-    double time;       // stores time
-    double avg_speed;  // stores calculated speed
+    double distance;   // stores distance in miles
+    double time;       // stores time in minutes
+    double avg_speed;  // stores average speed
 };
 
 int main()
 {
-    BicycleSpeedometer B1;  // create object
-    char choice = 'y';      // used to repeat program
+    BicycleSpeedometer B1;   // create object
+    char choice = 'y';       // used to repeat the program
 
-    // Loop so user can test multiple inputs
     while (choice == 'y' || choice == 'Y')
     {
-        double d, t;  // variables for user input
+        double d, t;
 
-        cout << "Enter distance traveled in miles: ";
-        cin >> d;
+        // Ask for distance until user enters a valid value
+        do
+        {
+            cout << "Enter distance traveled in miles: ";
+            cin >> d;
 
-        cout << "Enter time taken in minutes: ";
-        cin >> t;
+            if (d < 0)
+                cout << "Distance cannot be negative. Please try again." << endl;
 
-        // Set values into the object
+        } while (d < 0);
+
+        // Ask for time until user enters a value greater than 0
+        do
+        {
+            cout << "Enter time taken in minutes: ";
+            cin >> t;
+
+            if (t <= 0)
+                cout << "Time must be greater than 0. Please try again." << endl;
+
+        } while (t <= 0);
+
+        // Store values in the object
         B1.set_distance(d);
         B1.set_time(t);
 
-        // Calculate and display results
+        // Calculate and display average speed
         B1.average_speed();
         B1.display();
 
-        // Ask user if they want to continue
+        // Ask if user wants to run the program again
         cout << "\nDo you want to try again? (y/n): ";
         cin >> choice;
         cout << endl;
     }
 
-    return 0;  // end of program
+    return 0;
 }
